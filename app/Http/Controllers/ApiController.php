@@ -21,7 +21,8 @@ class ApiController extends Controller
         $tagId = RightTagFinder::getNextCourseFor($user, $contact, $this->fetchAllTags($infusionsoft));
 
         return Response::json([
-            'status' => $infusionsoft->addTag($contact['Id'], $tagId)
+            'success' => $infusionsoft->addTag($contact['Id'], $tagId),
+            'message' => 'Course Tag added successfully.'
         ]);
     }
 

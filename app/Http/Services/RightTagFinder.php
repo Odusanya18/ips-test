@@ -9,13 +9,13 @@ class RightTagFinder
         $completes = $user->completed_modules()->get();
 
         // possible courses are purchases in tags
-        $possibleCourses = getPossibleCoursesFrom($purchases, $tags);
-        $nextCourses = getNextCoursesFrom($possibleCourses, $completes);
+        $possibleCourses = self::getPossibleCoursesFrom($purchases, $tags);
+        $nextCourses = self::getNextCoursesFrom($possibleCourses, $completes);
 
         return next($nextCourses)->id;
     }
 
-    private function getNextCoursesFrom($possibleCourses, $completes){
+    private static function getNextCoursesFrom($possibleCourses, $completes){
         return array_filter($possibleCourses, function($tag) use ($completes){
             foreach ($completes as $completed) {
                 if (stripos($tag->name, $completed->name)) {
@@ -27,7 +27,7 @@ class RightTagFinder
         });
     }
 
-    private function getPossibleCoursesFrom($purchases, $tags){
+    private static function getPossibleCoursesFrom($purchases, $tags){
         $possibleCourses = [];
         foreach ($purchases as $purchase) {
             $count = count($tags);
